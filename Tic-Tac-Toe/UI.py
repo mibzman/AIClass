@@ -2,20 +2,20 @@ def doesPlayerGoFirst():
     inputChar = ''
     while inputChar not in 'X O'.split():
         print("Who goes first?  Enter x for human, o for computer")
-        output = input().upper()
+        inputChar = input().upper()
     if inputChar == 'X':
-        return true
+        return True
     else:
-        return false
-def isBeginnerMode():
+        return False
+def getIsBeginnerMode():
     inputChar = ''
     while inputChar not in '1 0'.split():
         print("What difficulty?  Enter 0 for random movements (beginner), 1 for advanced mode")
-        output = input().upper()
-    if inputChar == '1':
-        return true
+        inputChar = input()
+    if inputChar == 0:
+        return True
     else:
-        return false
+        return False
 
 def playAgain():
     #I thought this was a neat way to get yes or no,
