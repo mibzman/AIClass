@@ -25,7 +25,7 @@ def playAgain():
 
 def onePlayerMode():
     print('Do you want to play a one player game? (yes or no)')
-    return input().lower().startswith('y')
+    return raw_input("Do you want to play a one player game? (yes or no) ").lower().startswith('y')
 
 def drawBoard(board):
     print('   |   |')
