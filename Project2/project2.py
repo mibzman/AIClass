@@ -15,9 +15,9 @@ class DecisionTreeData(dict):
             raise AttributeError(key)
 
     
-def load_iris():
+def LoadDataFromFile(filename):
     #change below csv file path
-    with open('data.csv') as csv_file:
+    with open(filename) as csv_file:
         data_file = csv.reader(csv_file)
         temp = next(data_file)
         #number of samples is read from first line first word
@@ -51,15 +51,32 @@ def load_iris():
 
 
 
+print("Press 1 to load a new decision tree from a csv file")
+print("     Note: the last collumn of the chart will be assumed to be the goal value")
+print("Press 2 to load an existing decision tree")
 #read data from file
-iris = load_iris()
-#print(iris)
+inputChar = input()
 
-#Create DecisionTreeClassifier
-clf = tree.DecisionTreeClassifier()
+if inputChar == 1:
+    print("Enter file name of data")
+    iris = load_iris(input())
 
-#Fit the data read from file
-clf = clf.fit(iris.data, iris.target)
+    #Create DecisionTreeClassifier
+    clf = tree.DecisionTreeClassifier()
+
+    #Fit the data read from file
+    clf = clf.fit(iris.data, iris.target)
+elif inputChar == 2:
+    print("Loading a decision tree could be implemented with pickle, however Dr.Chan suggested that it would be outside the scope of this project.")
+else:
+    print("Invalid Input")
+
+print("Decision Tree Created")
+
+#TODO: break out csv read-in so we can do the tree test in a way that makes sense
+# be able to get number of fields so we can do the interactive new case easily
+
+
 
 #prediction for given value
 #Note that [4.5,2.4,3.3,1.0] is not a given value in the input file
