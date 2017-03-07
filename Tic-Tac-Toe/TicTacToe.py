@@ -138,6 +138,7 @@ def playTwoPlayerGame():
 
     gameIsPlaying = True
     drawFirstBoard()
+    isPlayersTurn = True
 
     while gameIsPlaying:
         drawBoard(board)
@@ -149,6 +150,7 @@ def playTwoPlayerGame():
             if aiWon(board):
                 print('Player 2 won')
                 gameIsPlaying = False
+                break
             move = getPlayerMove(board)
             board[move] = 'X'
             isPlayersTurn = False
@@ -156,6 +158,7 @@ def playTwoPlayerGame():
             if playerWon(board): #re-using this method because player2 is O
                 print('Player 1 won')
                 gameIsPlaying = False
+                break
             move = getPlayerMove(board)
             #print(getPlayerMove(board))
             board[move] = 'O'
