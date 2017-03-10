@@ -38,7 +38,7 @@ def LoadDataFromFile(filename):
         #iterate over remaining data and fill in data and target arrays
         for i, ir in enumerate(data_file):
             #print (i)
-            if i == 150:
+            if i == n_samples:
               continue
             data[i] = np.asarray(ir[:-1], dtype=np.float64)
             target[i] = np.asarray(ir[-1], dtype=np.int)
@@ -51,36 +51,38 @@ def LoadDataFromFile(filename):
 
 
 
-print("Press 1 to load a new decision tree from a csv file")
-print("     Note: the last collumn of the chart will be assumed to be the goal value")
-print("Press 2 to load an existing decision tree")
-#read data from file
-inputChar = input()
+def TestDataFromFile(testData, clf):
+    with open(testData) as csv_file:
+        data_file = csv.reader(csv_file)
+        for i, ir in enumerate(data_file):
+            answer = np.asarray(ir[:-1], dtype=np.float64)
+            realAnswer = np.asarray(ir[-1], dtype=np.int)
+            if answer[0] != realAnswer:
+                print("wrong answer: ", answer, " != ", realAnswer)
 
-if inputChar == 1:
-    print("Enter file name of data")
-    iris = load_iris(input())
 
-    #Create DecisionTreeClassifier
-    clf = tree.DecisionTreeClassifier()
 
-    #Fit the data read from file
-    clf = clf.fit(iris.data, iris.target)
-elif inputChar == 2:
-    print("Loading a decision tree could be implemented with pickle, however Dr.Chan suggested that it would be outside the scope of this project.")
-else:
-    print("Invalid Input")
+print("Formatting:")
+print("     First row: [number of data points],[number of dimensions],[name of possiable result],[name of possiable result],[name of possiable result]....")
+print("     The last collumn of the chart will be assumed to be the goal value")
+
+print("Enter file name of data")
+iris = LoadDataFromFile(raw_input())
+
+#Create DecisionTreeClassifier
+clf = tree.DecisionTreeClassifier()
+
+#Fit the data read from file
+clf = clf.fit(iris.data, iris.target)
 
 print("Decision Tree Created")
 
-#TODO: break out csv read-in so we can do the tree test in a way that makes sense
-# be able to get number of fields so we can do the interactive new case easily
+print("enter csv file for testing")
 
-
-
+TestDataFromFile(raw_input(), clf)
 #prediction for given value
 #Note that [4.5,2.4,3.3,1.0] is not a given value in the input file
-print(iris.target_names[clf.predict([[4.5,2.4,3.3,1.0]])])
+print(clf.predict([[4.5,2.4,3.3,1.0]]))
 
 #Drawing Decision Tree Data in a dot file. Change the path 
 with open('output.dot', 'w') as f:
