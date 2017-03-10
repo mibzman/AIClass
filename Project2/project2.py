@@ -61,6 +61,11 @@ def TestDataFromFile(testData, clf):
         #number of features available
         n_features = int(temp[1])
 
+        data = np.empty((n_samples, n_features))
+
+        #create an array of size n_samples * n_features
+        target = np.empty((n_samples,), dtype=np.int)
+
         #iterate over remaining data and fill in data and target arrays
         for i, ir in enumerate(data_file):
             #print (i)
