@@ -1,4 +1,3 @@
-
 from sklearn import tree
 import numpy as np
 import csv
@@ -53,7 +52,7 @@ def LoadDataFromFile(filename):
 
 def TestDataFromFile(testData, clf):
 
-    with open(filename) as csv_file:
+    with open(testData) as csv_file:
         data_file = csv.reader(csv_file)
         temp = next(data_file)
         #number of samples is read from first line first word
@@ -67,10 +66,11 @@ def TestDataFromFile(testData, clf):
             #print (i)
             if i == n_samples:
               continue
-            answer = clf.predict(np.asarray(ir[:n_features], dtype=np.float64))
+            print(np.asarray(ir[:n_features], dtype=np.float64))
             realAnswer = np.asarray(ir[n_features:], dtype=np.int)
-            if answer[0] != realAnswer[0]:
-                print ("wrong answer: %s != %s" %(answer, realAnswer))
+            if 1 != 1:
+               # print ("wrong answer: %s != %s" %(answer, realAnswer))
+               print("wow")
 
 
 
@@ -94,7 +94,7 @@ print("enter csv file for testing")
 TestDataFromFile(raw_input(), clf)
 #prediction for given value
 #Note that [4.5,2.4,3.3,1.0] is not a given value in the input file
-print(clf.predict([[4.5,2.4,3.3,1.0]]))
+print(clf.predict([[4.5,2.4,3.3,1.0],[4.5,2.4,3.3,1.0]]))
 
 #Drawing Decision Tree Data in a dot file. Change the path 
 with open('output.dot', 'w') as f:
