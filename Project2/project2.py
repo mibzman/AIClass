@@ -66,11 +66,17 @@ def TestDataFromFile(testData, clf):
             #print (i)
             if i == n_samples:
               continue
-            print(np.asarray(ir[:n_features], dtype=np.float64))
-            realAnswer = np.asarray(ir[n_features:], dtype=np.int)
-            if 1 != 1:
-               # print ("wrong answer: %s != %s" %(answer, realAnswer))
-               print("wow")
+            data[i] = np.asarray(ir[:n_features], dtype=np.float64)
+            target[i] = np.asarray(ir[n_features:], dtype=np.int)
+
+        predictions = clf.predict(data)
+
+        for i, ir in enumerate(predictions):
+            if i == n_samples:
+              continue
+            if predictions[i] != target[i]:
+               print ("wrong answer: %s != %s" %(predictions[i], target[i]))
+               #print("wow")
 
 
 
