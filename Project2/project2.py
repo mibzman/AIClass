@@ -40,8 +40,8 @@ def LoadDataFromFile(filename):
             #print (i)
             if i == n_samples:
               continue
-            data[i] = np.asarray(ir[:-1], dtype=np.float64)
-            target[i] = np.asarray(ir[-1], dtype=np.int)
+            data[i] = np.asarray(ir[:n_features], dtype=np.float64)
+            target[i] = np.asarray(ir[n_features:], dtype=np.int)
                  
 
     return DecisionTreeData(data=data, target=target,
@@ -52,13 +52,25 @@ def LoadDataFromFile(filename):
 
 
 def TestDataFromFile(testData, clf):
-    with open(testData) as csv_file:
+
+    with open(filename) as csv_file:
         data_file = csv.reader(csv_file)
+        temp = next(data_file)
+        #number of samples is read from first line first word
+        n_samples = int(temp[0])
+
+        #number of features available
+        n_features = int(temp[1])
+
+        #iterate over remaining data and fill in data and target arrays
         for i, ir in enumerate(data_file):
-            answer = np.asarray(ir[:-1], dtype=np.float64)
-            realAnswer = np.asarray(ir[-1], dtype=np.int)
-            if answer[0] != realAnswer:
-                print("wrong answer: ", answer, " != ", realAnswer)
+            #print (i)
+            if i == n_samples:
+              continue
+            answer = clf.predict(np.asarray(ir[:n_features], dtype=np.float64))
+            realAnswer = np.asarray(ir[n_features:], dtype=np.int)
+            if answer[0] != realAnswer[0]:
+                print ("wrong answer: %s != %s" %(answer, realAnswer))
 
 
 
