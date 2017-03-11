@@ -51,7 +51,7 @@ def LoadDataFromFile(filename):
 
 
 def TestDataFromFile(testData, clf):
-
+    result = True
     with open(testData) as csv_file:
         data_file = csv.reader(csv_file)
         temp = next(data_file)
@@ -81,7 +81,18 @@ def TestDataFromFile(testData, clf):
               continue
             if predictions[i] != target[i]:
                print ("wrong answer: %s != %s" %(predictions[i], target[i]))
-               #print("wow")
+               result = False
+	if result:
+		print("all tests have passed")
+	else:
+		print("some tests failed")
+
+def GetDataPointsFromCSV(filename):
+    with open(testData) as csv_file:
+        data_file = csv.reader(csv_file)
+        temp = next(data_file)
+        #number of samples is read from first line first word
+        return int(temp[0])
 
 
 
@@ -100,15 +111,40 @@ clf = clf.fit(iris.data, iris.target)
 
 print("Decision Tree Created")
 
-print("enter csv file for testing")
+while True:
+	print("press 1 to test with csv file")
+	print("press 2 to enter a custom value")
+	print("press 3 to exit")
 
-TestDataFromFile(raw_input(), clf)
+	inputChar = raw_input()
+	if inputChar == '1':
+		print("enter csv file for testing")
+		testingFilename = raw_input()
+		TestDataFromFile(testingFilename, clf)
+	elif inputChar == '2':
+        	print("enter number of data points")
+	        numInputs = int(raw_input())
+        	data = np.empty((1, numInputs))
+		tempData = []
+        	for i in range(1, numInputs +1):
+			print("enter %sth value" %(i))
+			tempData.append(int(raw_input()))
+		data[0] = tempData
+		print("prediction:")
+        	print(iris.target_names[clf.predict(data)])
+	elif inputChar == '3':
+        	break
+	else:
+		print("invalid option")
 #prediction for given value
 #Note that [4.5,2.4,3.3,1.0] is not a given value in the input file
-print(clf.predict([[4.5,2.4,3.3,1.0],[4.5,2.4,3.3,1.0]]))
+
+#numPoints = GetDataPointsFromCSV(testingFilename)
+ 
+#print(clf.predict([[4.5,2.4,3.3,1.0],[4.5,2.4,3.3,1.0]]))
 
 #Drawing Decision Tree Data in a dot file. Change the path 
-with open('output.dot', 'w') as f:
-    f = tree.export_graphviz(clf, out_file=f)
+#with open('output.dot', 'w') as f:
+   # f = tree.export_graphviz(clf, out_file=f)
 
 
