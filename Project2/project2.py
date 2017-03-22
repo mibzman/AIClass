@@ -1,6 +1,7 @@
 from sklearn import tree
 import numpy as np
 import csv
+import sklearn.metrics as metrics
 
 class DecisionTreeData(dict):
     
@@ -86,6 +87,7 @@ def TestDataFromFile(testData, clf):
 		print("all tests have passed")
 	else:
 		print("some tests failed")
+	print(metrics.confusion_matrix(target, predictions))
 
 def GetDataPointsFromCSV(filename):
     with open(testData) as csv_file:
@@ -108,6 +110,10 @@ clf = tree.DecisionTreeClassifier()
 
 #Fit the data read from file
 clf = clf.fit(iris.data, iris.target)
+
+print("data:")
+#iris.data.set_printoptions(precision=3)
+#print(iris.data)
 
 print("Decision Tree Created")
 
